@@ -1,10 +1,32 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
+use utf8;
 use JSON::PP;
+use Encode qw(encode_utf8);
+use File::Spec;
+
+binmode STDOUT, ':raw';
 
 my $query = lc(join(' ', @ARGV) // '');
 $query =~ s/^\s+|\s+$//g;
+
+# Load custom keywords from config file
+my $config_dir = File::Spec->catdir($ENV{HOME}, '.config', 'semoji');
+my $config_file = File::Spec->catfile($config_dir, 'custom.json');
+my %custom_keywords;
+
+if (-f $config_file) {
+    if (open my $fh, '<:utf8', $config_file) {
+        local $/;
+        my $json_text = <$fh>;
+        close $fh;
+        eval {
+            my $data = decode_json(encode_utf8($json_text));
+            %custom_keywords = %$data if ref($data) eq 'HASH';
+        };
+    }
+}
 
 my @emojis = (
     # Smileys & Emotion
@@ -709,9 +731,16 @@ if ($query eq '') {
     my @query_terms = split /\s+/, $query;
 
     for my $e (@emojis) {
-        my $score = calculate_score($e, $query, \@query_terms);
+        # Merge custom keywords if they exist for this emoji
+        my @keywords = @{$e->[2]};
+        if (exists $custom_keywords{$e->[0]}) {
+            push @keywords, @{$custom_keywords{$e->[0]}};
+        }
+        my $emoji_with_custom = [$e->[0], $e->[1], \@keywords];
+
+        my $score = calculate_score($emoji_with_custom, $query, \@query_terms);
         if ($score > 0) {
-            push @results, { emoji => $e, score => $score };
+            push @results, { emoji => $emoji_with_custom, score => $score };
         }
     }
 
@@ -723,11 +752,16 @@ my $count = 0;
 for my $r (@results) {
     last if $count >= 50;
     my $e = $r->{emoji};
+    my $keywords_preview = join(', ', @{$e->[2]}[0..2]);
     push @items, {
         uid => $e->[0],
         title => "$e->[0]  $e->[1]",
-        subtitle => "⏎ Copy to clipboard  ⌘⏎ Paste directly",
+        subtitle => $keywords_preview,
         arg => $e->[0],
+        text => {
+            copy => $e->[0],
+            largetype => $e->[0]
+        },
         mods => {
             cmd => {
                 valid => JSON::PP::true,

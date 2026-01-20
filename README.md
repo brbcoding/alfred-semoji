@@ -43,35 +43,64 @@ Search by:
 
 The database includes 400+ emojis with 5-15 keywords each.
 
-## Building from source
+## Installation
 
-Requires Go 1.21+
+Download the latest `.alfredworkflow` file and double-click to install.
 
-```bash
-go build -o emoji-search .
-```
-
-## Adding emojis or keywords
-
-Edit `emoji_data.go`:
-
-```go
-{"🆕", "New Button", []string{"new", "fresh", "recent", "update"}},
-```
-
-Then rebuild and reinstall:
+Or build from source:
 
 ```bash
-go build -o emoji-search .
-cp emoji-search info.plist icon.png "/path/to/workflow/directory/"
+./build.sh
 ```
+
+Then double-click `Semoji.alfredworkflow` to install.
+
+## Custom Keywords
+
+Add your own keywords to any emoji without editing the source code.
+
+### Via Alfred
+
+Use the `emoji:add` keyword:
+
+```
+emoji:add fire awesome    → adds "awesome" to 🔥
+emoji:add thumbs bob      → adds "bob" to 👍
+emoji:add heart love,fav  → adds "love" and "fav" to ❤️
+```
+
+### Via Config File
+
+Edit `~/.config/semoji/custom.json` directly:
+
+```json
+{
+  "🔥": ["awesome", "great"],
+  "👍": ["bob", "approve"],
+  "❤️": ["favorite", "love"]
+}
+```
+
+Custom keywords are merged with built-in keywords when searching.
+
+## Editing the Built-in Database
+
+To add new emojis or modify built-in keywords, edit `emoji-search.pl` and find the `@emojis` array:
+
+```perl
+['🆕', 'New Button', ['new', 'fresh', 'recent', 'update']],
+```
+
+Then rebuild with `./build.sh` and reinstall.
 
 ## Files
 
-- `main.go` - Search algorithm and Alfred JSON output
-- `emoji_data.go` - Emoji database with keywords
+- `emoji-search.pl` - Search algorithm, emoji database, and Alfred JSON output
+- `emoji-add.pl` - Script filter for adding custom keywords
+- `emoji-save.pl` - Saves custom keywords to config file
 - `info.plist` - Alfred workflow configuration
 - `icon.png` - Workflow icon
+- `build.sh` - Build script to create the .alfredworkflow package
 
 ## License
 

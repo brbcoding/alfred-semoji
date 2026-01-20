@@ -29,11 +29,60 @@
 				<string></string>
 			</dict>
 		</array>
+		<key>ADD-FILTER-UUID-12345</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>ADD-SCRIPT-UUID-12345</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoaliases</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>ADD-SCRIPT-UUID-12345</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>ADD-NOTIFY-UUID-12345</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoaliases</key>
+				<string></string>
+			</dict>
+		</array>
 	</dict>
 	<key>createdby</key>
 	<string>Cody Henshaw</string>
 	<key>description</key>
 	<string>Search emojis by meaning</string>
+	<key>readme</key>
+	<string>Search emojis by name, emotion, concept, or slang via the `emoji` keyword.
+
+• Press ↩︎ to copy emoji to clipboard
+• Press ⌘↩︎ to paste emoji directly to frontmost app
+
+Examples:
+• emoji happy → 😀 😃 😄 😊 😁
+• emoji sad → 😢 😭 😞 😔
+• emoji love → ❤️ 😍 💕 🥰 💗
+• emoji think → 🤔
+• emoji fire → 🔥
+• emoji cool → 😎
+
+Works with emotions (angry, nervous), concepts (money, time), use cases (approve, warning), and slang (lit, lol, yikes).
+
+## Custom Keywords
+
+Add your own keywords to emojis:
+• emoji:add fire awesome → adds "awesome" as keyword for 🔥
+• emoji:add thumbs bob → adds "bob" as keyword for 👍
+
+Custom keywords are saved to ~/.config/semoji/custom.json</string>
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
@@ -117,6 +166,95 @@
 			<key>version</key>
 			<integer>3</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>emoji:add</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyalinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Searching...</string>
+				<key>script</key>
+				<string>./emoji-add.pl "$1"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Add custom keyword: emoji:add &lt;search&gt; &lt;keyword&gt;</string>
+				<key>title</key>
+				<string>Add Custom Emoji Keyword</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>ADD-FILTER-UUID-12345</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>./emoji-save.pl "$1"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>ADD-SCRIPT-UUID-12345</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>Emoji Keyword Added</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>ADD-NOTIFY-UUID-12345</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
 	</array>
 	<key>uidata</key>
 	<dict>
@@ -140,6 +278,27 @@
 			<real>350</real>
 			<key>ypos</key>
 			<real>150</real>
+		</dict>
+		<key>ADD-FILTER-UUID-12345</key>
+		<dict>
+			<key>xpos</key>
+			<real>100</real>
+			<key>ypos</key>
+			<real>250</real>
+		</dict>
+		<key>ADD-SCRIPT-UUID-12345</key>
+		<dict>
+			<key>xpos</key>
+			<real>350</real>
+			<key>ypos</key>
+			<real>250</real>
+		</dict>
+		<key>ADD-NOTIFY-UUID-12345</key>
+		<dict>
+			<key>xpos</key>
+			<real>550</real>
+			<key>ypos</key>
+			<real>250</real>
 		</dict>
 	</dict>
 	<key>version</key>

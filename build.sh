@@ -4,16 +4,16 @@
 
 set -e
 
-echo "Building Emoji Semantic Search..."
+echo "Building Semoji..."
 
-# Ensure the Perl script is executable
-chmod +x emoji-search.pl
+# Ensure the Perl scripts are executable
+chmod +x emoji-search.pl emoji-add.pl emoji-save.pl
 
 # Create the workflow package
-rm -f "Emoji Semantic Search.alfredworkflow"
-zip -j "Emoji Semantic Search.alfredworkflow" emoji-search.pl info.plist icon.png 2>/dev/null || \
-zip -j "Emoji Semantic Search.alfredworkflow" emoji-search.pl info.plist
+rm -f "Semoji.alfredworkflow"
+zip -j "Semoji.alfredworkflow" emoji-search.pl emoji-add.pl emoji-save.pl info.plist icon.png 2>/dev/null || \
+zip -j "Semoji.alfredworkflow" emoji-search.pl emoji-add.pl emoji-save.pl info.plist
 
-echo "Build complete! Workflow: Emoji Semantic Search.alfredworkflow"
+echo "Build complete! Workflow: Semoji.alfredworkflow"
 echo ""
-echo "To install: Double-click 'Emoji Semantic Search.alfredworkflow'"
+echo "To install: Double-click 'Semoji.alfredworkflow'"

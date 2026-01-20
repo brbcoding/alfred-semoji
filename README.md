@@ -4,12 +4,12 @@ An Alfred workflow for finding emojis by meaning, not just exact names.
 
 ## Usage
 
-1. Open Alfred
-2. Type `emoji` followed by a search term
-3. Press **Enter** to copy the emoji to clipboard
-4. Press **Cmd+Enter** to paste directly into the frontmost app
+Search emojis by name, emotion, concept, or slang via the `emoji` keyword.
 
-## Examples
+* <kbd>↩︎</kbd> Copy emoji to clipboard
+* <kbd>⌘</kbd><kbd>↩︎</kbd> Paste emoji to frontmost app
+
+### Examples
 
 | Query | Results |
 |-------|---------|

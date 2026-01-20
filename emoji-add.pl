@@ -10,13 +10,22 @@ use File::Path qw(make_path);
 binmode STDIN, ':utf8';
 binmode STDOUT, ':raw';
 
-my $input = join(' ', @ARGV) // '';
+my $input = decode_utf8(join(' ', @ARGV) // '');
 $input =~ s/^\s+|\s+$//g;
 
-# Parse input: first word is emoji search, rest are keywords to add
+# Parse input: first word is emoji (direct) or search term, rest are keywords to add
 my @parts = split /\s+/, $input;
-my $search = lc(shift @parts // '');
+my $first_part = shift @parts // '';
 my @new_keywords = @parts;
+
+# Check if first part is an actual emoji (starts with high codepoint or emoji)
+my $direct_emoji;
+my $search;
+if ($first_part =~ /^[\x{1F000}-\x{1FFFF}]|^[\x{2600}-\x{27BF}]|^[\x{FE00}-\x{FE0F}]|^[\x{200D}]|^[☀-⛿]|^❤|^✨|^✅|^❌|^✔|^☑|^✖|^☎|^✉|^✂|^✏|^☕|^⭐|^⬆⬇⬅➡↗↘↙↖↕↔]/) {
+    $direct_emoji = $first_part;
+} else {
+    $search = lc($first_part);
+}
 
 # Config file setup
 my $config_dir = File::Spec->catdir($ENV{HOME}, '.config', 'semoji');
@@ -73,22 +82,50 @@ if (-f $config_file) {
 
 my @items;
 
-if ($search eq '') {
+if ($direct_emoji) {
+    # User pasted an emoji directly - look up its name from the database
+    my $emoji_name = "Custom Emoji";
+    for my $e (@emojis) {
+        if ($e->[0] eq $direct_emoji) {
+            $emoji_name = $e->[1];
+            last;
+        }
+    }
+
+    if (@new_keywords == 0) {
+        my $existing = $custom_keywords{$direct_emoji} // [];
+        my $custom_str = @$existing ? " [custom: " . join(", ", @$existing) . "]" : "";
+        push @items, {
+            title => "$direct_emoji  $emoji_name",
+            subtitle => "Add keyword after emoji (e.g., '$direct_emoji mykeyword')$custom_str",
+            valid => JSON::PP::false,
+            icon => { path => "icon.png" }
+        };
+    } else {
+        my $keywords_str = join(", ", @new_keywords);
+        my $arg_str = $direct_emoji . "|" . join(",", @new_keywords);
+        push @items, {
+            uid => $direct_emoji,
+            title => "$direct_emoji  Add: $keywords_str",
+            subtitle => "Press ↩ to add keyword(s) to $emoji_name",
+            arg => $arg_str,
+            valid => JSON::PP::true,
+            icon => { path => "icon.png" }
+        };
+    }
+} elsif (!defined $search || $search eq '') {
     push @items, {
         title => "Add custom keyword to emoji",
-        subtitle => "Type: <emoji-search> <keyword> (e.g., 'fire awesome')",
+        subtitle => "Paste emoji + keyword (e.g., '🔥 awesome') or search + keyword (e.g., 'fire awesome')",
         valid => JSON::PP::false,
         icon => { path => "icon.png" }
     };
 } else {
-    # Find matching emojis
+    # Find matching emojis by search term
     my @matches;
     for my $e (@emojis) {
         my $name_lower = lc($e->[1]);
         my $matches = 0;
-
-        # Check if emoji itself matches (for direct paste)
-        $matches = 1 if $e->[0] eq $search;
 
         # Check name
         $matches = 1 if index($name_lower, $search) >= 0;
@@ -104,7 +141,7 @@ if ($search eq '') {
     if (@matches == 0) {
         push @items, {
             title => "No emoji found for '$search'",
-            subtitle => "Try a different search term",
+            subtitle => "Try a different search term, or paste the emoji directly",
             valid => JSON::PP::false
         };
     } elsif (@new_keywords == 0) {
@@ -114,7 +151,7 @@ if ($search eq '') {
             my $custom_str = @$existing ? " [custom: " . join(", ", @$existing) . "]" : "";
             push @items, {
                 title => "$e->[0]  $e->[1]",
-                subtitle => "Add keyword after emoji search (e.g., '$search mykeyword')$custom_str",
+                subtitle => "Add keyword after search (e.g., '$search mykeyword')$custom_str",
                 valid => JSON::PP::false,
                 icon => { path => "icon.png" }
             };

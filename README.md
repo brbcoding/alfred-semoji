@@ -61,13 +61,16 @@ Add your own keywords to any emoji without editing the source code.
 
 ### Via Alfred
 
-Use the `emoji:add` keyword:
+Use the `emoji:add` keyword. You can paste the emoji directly or search for it:
 
 ```
-emoji:add fire awesome    → adds "awesome" to 🔥
-emoji:add thumbs bob      → adds "bob" to 👍
-emoji:add heart love,fav  → adds "love" and "fav" to ❤️
+emoji:add 🔥 awesome      → paste emoji directly + keyword
+emoji:add fire awesome    → or search for it + keyword
+emoji:add 👍 bob          → adds "bob" to 👍
+emoji:add 🦷 tooth dental → works with any emoji, even ones not in the database
 ```
+
+**Tip:** Copy an emoji from search results, then paste it into `emoji:add`.
 
 ### Via Config File
 

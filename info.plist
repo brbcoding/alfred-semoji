@@ -79,8 +79,10 @@ Works with emotions (angry, nervous), concepts (money, time), use cases (approve
 ## Custom Keywords
 
 Add your own keywords to emojis:
-• emoji:add fire awesome → adds "awesome" as keyword for 🔥
-• emoji:add thumbs bob → adds "bob" as keyword for 👍
+• emoji:add 🔥 awesome → paste emoji directly + keyword
+• emoji:add fire awesome → or search for emoji + keyword
+
+Tip: Copy an emoji from search results, then paste it into emoji:add!
 
 Custom keywords are saved to ~/.config/semoji/custom.json</string>
 	<key>disabled</key>
@@ -196,7 +198,7 @@ Custom keywords are saved to ~/.config/semoji/custom.json</string>
 				<key>scriptfile</key>
 				<string></string>
 				<key>subtext</key>
-				<string>Add custom keyword: emoji:add &lt;search&gt; &lt;keyword&gt;</string>
+				<string>Add custom keyword: paste emoji + keyword, or search + keyword</string>
 				<key>title</key>
 				<string>Add Custom Emoji Keyword</string>
 				<key>type</key>

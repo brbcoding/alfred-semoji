@@ -6,16 +6,14 @@ set -e
 
 echo "Building Emoji Semantic Search..."
 
-# Build for current architecture
-go build -o emoji-search .
+# Ensure the Perl script is executable
+chmod +x emoji-search.pl
 
-echo "Build complete! Binary: emoji-search"
+# Create the workflow package
+rm -f "Emoji Semantic Search.alfredworkflow"
+zip -j "Emoji Semantic Search.alfredworkflow" emoji-search.pl info.plist icon.png 2>/dev/null || \
+zip -j "Emoji Semantic Search.alfredworkflow" emoji-search.pl info.plist
+
+echo "Build complete! Workflow: Emoji Semantic Search.alfredworkflow"
 echo ""
-echo "To install the workflow:"
-echo "1. Create a folder: 'Emoji Semantic Search.alfredworkflow'"
-echo "2. Copy these files into it:"
-echo "   - emoji-search (binary)"
-echo "   - info.plist"
-echo "3. Double-click the .alfredworkflow folder to install"
-echo ""
-echo "Or run: ./install.sh"
+echo "To install: Double-click 'Emoji Semantic Search.alfredworkflow'"

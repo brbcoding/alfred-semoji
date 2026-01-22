@@ -55,6 +55,32 @@
 				<string></string>
 			</dict>
 		</array>
+		<key>SETTINGS-FILTER-UUID</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>SETTINGS-SCRIPT-UUID</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoaliases</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>SETTINGS-SCRIPT-UUID</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>SETTINGS-NOTIFY-UUID</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoaliases</key>
+				<string></string>
+			</dict>
+		</array>
 	</dict>
 	<key>createdby</key>
 	<string>Cody Henshaw</string>
@@ -75,6 +101,16 @@ Examples:
 • emoji cool → 😎
 
 Works with emotions (angry, nervous), concepts (money, time), use cases (approve, warning), and slang (lit, lol, yikes).
+
+## Unicode Characters
+
+Enable Unicode search to find arrows (→←), math symbols (±×÷√∞), Greek letters (αβγ), currency (€£¥), and more.
+
+• emoji:settings → Toggle unicode search on/off
+
+• emoji arrow → → ← ↑ ↓
+• emoji alpha → α
+• emoji infinity → ∞
 
 ## Custom Keywords
 
@@ -257,6 +293,95 @@ Custom keywords are saved to ~/.config/semoji/custom.json</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>emoji:settings</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyalinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Loading...</string>
+				<key>script</key>
+				<string>./emoji-settings.pl</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Configure emoji search settings</string>
+				<key>title</key>
+				<string>Emoji Settings</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>SETTINGS-FILTER-UUID</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>./emoji-toggle.pl "{query}"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>SETTINGS-SCRIPT-UUID</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>Emoji Settings</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>SETTINGS-NOTIFY-UUID</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
 	</array>
 	<key>uidata</key>
 	<dict>
@@ -301,6 +426,27 @@ Custom keywords are saved to ~/.config/semoji/custom.json</string>
 			<real>550</real>
 			<key>ypos</key>
 			<real>250</real>
+		</dict>
+		<key>SETTINGS-FILTER-UUID</key>
+		<dict>
+			<key>xpos</key>
+			<real>100</real>
+			<key>ypos</key>
+			<real>400</real>
+		</dict>
+		<key>SETTINGS-SCRIPT-UUID</key>
+		<dict>
+			<key>xpos</key>
+			<real>350</real>
+			<key>ypos</key>
+			<real>400</real>
+		</dict>
+		<key>SETTINGS-NOTIFY-UUID</key>
+		<dict>
+			<key>xpos</key>
+			<real>550</real>
+			<key>ypos</key>
+			<real>400</real>
 		</dict>
 	</dict>
 	<key>version</key>

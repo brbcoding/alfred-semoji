@@ -86,6 +86,38 @@ Edit `~/.config/semoji/custom.json` directly:
 
 Custom keywords are merged with built-in keywords when searching.
 
+## Unicode Character Search
+
+In addition to emojis, you can enable searching for Unicode characters like arrows (→←↑↓), mathematical symbols (±×÷√∞≈≠), Greek letters (αβγδ), currency symbols (€£¥₹₿), and more.
+
+### Enabling Unicode Search
+
+Use the `emoji:settings` keyword in Alfred to toggle Unicode search on/off.
+
+Or manually edit `~/.config/semoji/settings.json`:
+
+```json
+{
+  "unicode_enabled": true
+}
+```
+
+### Unicode Examples
+
+| Query | Results |
+|-------|---------|
+| `emoji arrow` | → ← ↑ ↓ ⇒ ⇐ |
+| `emoji alpha` | α Α |
+| `emoji pi` | π Π |
+| `emoji infinity` | ∞ |
+| `emoji euro` | € |
+| `emoji check` | ✓ ✔ ☑ |
+| `emoji degree` | ° ℃ ℉ |
+| `emoji fraction` | ½ ¼ ¾ ⅓ ⅔ |
+| `emoji command` | ⌘ |
+
+Unicode results are labeled with "Unicode ·" in the subtitle to distinguish them from emojis.
+
 ## Editing the Built-in Database
 
 To add new emojis or modify built-in keywords, edit `emoji-search.pl` and find the `@emojis` array:
@@ -98,12 +130,19 @@ Then rebuild with `./build.sh` and reinstall.
 
 ## Files
 
-- `emoji-search.pl` - Search algorithm, emoji database, and Alfred JSON output
+- `emoji-search.pl` - Search algorithm, emoji/unicode database, and Alfred JSON output
 - `emoji-add.pl` - Script filter for adding custom keywords
 - `emoji-save.pl` - Saves custom keywords to config file
+- `emoji-settings.pl` - Settings menu script filter
+- `emoji-toggle.pl` - Toggles settings (unicode search)
 - `info.plist` - Alfred workflow configuration
 - `icon.png` - Workflow icon
 - `build.sh` - Build script to create the .alfredworkflow package
+
+## Configuration Files
+
+- `~/.config/semoji/settings.json` - Settings (e.g., `{"unicode_enabled": true}`)
+- `~/.config/semoji/custom.json` - Custom keywords
 
 ## License
 

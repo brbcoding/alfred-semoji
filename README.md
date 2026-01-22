@@ -92,7 +92,7 @@ In addition to emojis, you can enable searching for Unicode characters like arro
 
 ### Enabling Unicode Search
 
-Use the `emoji:settings` keyword in Alfred to toggle Unicode search on/off.
+Type `emoji:unicode` in Alfred to toggle Unicode search on/off.
 
 Or manually edit `~/.config/semoji/settings.json`:
 
@@ -133,8 +133,7 @@ Then rebuild with `./build.sh` and reinstall.
 - `emoji-search.pl` - Search algorithm, emoji/unicode database, and Alfred JSON output
 - `emoji-add.pl` - Script filter for adding custom keywords
 - `emoji-save.pl` - Saves custom keywords to config file
-- `emoji-settings.pl` - Settings menu script filter
-- `emoji-toggle.pl` - Toggles settings (unicode search)
+- `emoji-toggle.pl` - Toggles unicode search setting
 - `info.plist` - Alfred workflow configuration
 - `icon.png` - Workflow icon
 - `build.sh` - Build script to create the .alfredworkflow package
